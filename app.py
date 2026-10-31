@@ -71,18 +71,23 @@ def add_cors_headers(response: Response) -> Response:
 
 @app.route('/api/health', methods=['GET'])
 def health_check():
-    """Health check endpoint providing engine telemetry and device status."""
+    """Health check endpoint providing engine telemetry, device status, and checkpoint integrity."""
     return jsonify({
         "status": "healthy",
         "service": "Masthik Anveshan Diagnostic Server",
         "device": str(ENGINE.device),
         "version": "2.4.0",
+        "regulatory_status": "INVESTIGATIVE_RESEARCH_PROTOTYPE (Not FDA/CE cleared; requires neuroradiologist review)",
+        "checkpoint_status": "CALIBRATED_CHECKPOINT_LOADED" if ENGINE.checkpoint_loaded else "UNVERIFIED_SYNTHETIC_WEIGHTS",
+        "checkpoint_source": ENGINE.checkpoint_source,
+        "integrity_warning": ENGINE.integrity_warning,
         "supported_models": [
-            "PyTorch U-Net Segmentation (BraTS 2020 Architecture)",
-            "ResNet-50 4-Class Deep Classifier"
+            "PyTorch U-Net Segmentation (BraTS 2020 2D Axial Architecture - Muvva-Radhika Lineage)",
+            "ResNet-50 4-Class Deep Classifier (Kaggle Benchmark Lineage)"
         ],
         "datasets_available": list(DATASETS_INFO.keys())
     })
+
 
 
 # ============================================================================
@@ -225,9 +230,12 @@ def analyze():
             "preset_meta": preset_meta,
             "prediction": results["prediction"],
             "segmentation": results["segmentation"],
+            "model_integrity": results.get("model_integrity", {}),
+            "regulatory_disclaimer": results.get("regulatory_disclaimer", ""),
             "visuals": results["visuals"],
             "multimodal": multimodal_data
         })
+
 
     except Exception as e:
         import traceback
