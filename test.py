@@ -80,12 +80,24 @@ def run_diagnostic_test(image_path, threshold=0.5):
         print(f"    * Anatomical Lobe : {s['anatomical_location']}")
         print(f"    * Centroid Coord  : X:{s['centroid']['x']}, Y:{s['centroid']['y']}")
         print(f"    * Risk Level      : {s['risk_level']}")
+        if 'pixel_spacing' in s:
+            print(f"    * Pixel Spacing   : {s['pixel_spacing']['status']} (assumed 1.0mm x 1.0mm)")
 
         if s['subregions']['necrotic_core_pixels'] > 0:
-            print("\n[4] BRATS SUB-REGION DECOMPOSITION:")
+            print("\n[4] SUB-REGION DECOMPOSITION (Heuristic Proxy Simulation):")
             print(f"    * Necrotic Core (NCR)   : {s['subregions']['necrotic_core_pixels']:,} px")
             print(f"    * Enhancing Tumor (ET)  : {s['subregions']['enhancing_tumor_pixels']:,} px")
             print(f"    * Peritumoral Edema (ED): {s['subregions']['edema_pixels']:,} px")
+
+        if 'model_integrity' in results:
+            mi = results['model_integrity']
+            print("\n[5] MODEL INTEGRITY & REGULATORY STATUS:")
+            print(f"    * Checkpoint Status: {mi['status']}")
+            if mi.get('checkpoint_source'):
+                print(f"    * Weights Source   : {mi['checkpoint_source']}")
+            if mi.get('warning'):
+                print(f"    * Warning          : {mi['warning']}")
+            print(f"    * Classification   : RESEARCH PROTOTYPE ONLY (Not FDA/CE cleared)")
 
     else:
         # Fallback to direct PyTorch ResNet inference if standalone
