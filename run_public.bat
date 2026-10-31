@@ -29,4 +29,4 @@ echo   COPY THE URL BELOW AND PASTE IT IN YOUR GITHUB REPO ABOUT WEBSITE FIELD
 echo =========================================================================
 echo.
 
-ssh -o StrictHostKeyChecking=no -R 80:localhost:5000 serveo.net
+ssh -o StrictHostKeyChecking=no -R 80:127.0.0.1:5000 serveo.net
