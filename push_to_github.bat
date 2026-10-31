@@ -15,8 +15,8 @@ if %errorlevel% neq 0 (
     echo.
     echo =========================================================================
     echo   [SUCCESS] Repository published successfully to GitHub!
-    echo   Public URL to put in About website field:
-    echo   https://a22aac9d53a20336-103-165-15-20.serveousercontent.com
+    echo   Public URL configured in About website field:
+    echo   https://5309cb262dd0be.lhr.life
     echo =========================================================================
 )
 pause

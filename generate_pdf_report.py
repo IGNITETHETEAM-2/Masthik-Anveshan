@@ -458,7 +458,7 @@ def build_pdf(output_path: str):
         (
             "Step 7: Cloud Deployment & Ephemeral Public Tunneling (Point 6)",
             "run_public.bat, Procfile & render.yaml",
-            "Provides dual deployment pathways: 1-click public HTTPS tunneling via <code>run_public.bat</code> (localhost.run with TLS termination at https://f00edcbeb9794b.lhr.life) "
+            "Provides dual deployment pathways: 1-click public HTTPS tunneling via <code>run_public.bat</code> (localhost.run with TLS termination at https://5309cb262dd0be.lhr.life) "
             "with prominent HIPAA/PHI disclaimers; plus <code>Procfile</code> and <code>render.yaml</code> for containerized cloud deployment on Render/Railway."
         )
     ]
@@ -553,7 +553,7 @@ def build_pdf(output_path: str):
     links_data = [
         [Paragraph("<b>Resource Link</b>", table_header), Paragraph("URL / Path", table_header)],
         [Paragraph("Published GitHub Repository", table_cell_bold), Paragraph("https://github.com/IGNITETHETEAM-2/Masthik-Anveshan", table_cell)],
-        [Paragraph("Live Workstation Demonstration", table_cell_bold), Paragraph("https://f00edcbeb9794b.lhr.life &nbsp;<i>(Ephemeral Test Tunnel - No PHI)</i>", table_cell)],
+        [Paragraph("Live Workstation Demonstration", table_cell_bold), Paragraph("https://5309cb262dd0be.lhr.life &nbsp;<i>(Ephemeral Test Tunnel - No PHI)</i>", table_cell)],
         [Paragraph("Local 1-Click Launch Script", table_cell_bold), Paragraph("<code>run_app.bat</code> &nbsp;(Localhost Port 5000: http://localhost:5000)", table_cell)],
         [Paragraph("Automated Verification Suite", table_cell_bold), Paragraph("<code>python verify_all.py</code> &nbsp;(10/10 verification suites passing)", table_cell)],
         [Paragraph("ResNet-50 Checkpoint Origin", table_cell_bold), Paragraph("<code>models/bt_resnet50_model.pt</code> &nbsp;(128 MB, from aksh-ai/neuralBlack)", table_cell)],
