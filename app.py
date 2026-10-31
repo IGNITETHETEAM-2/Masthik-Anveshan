@@ -8,9 +8,10 @@ import os
 import sys
 import io
 import base64
+from functools import wraps
 from typing import Optional
 
-from flask import Flask, request, jsonify, render_template, redirect, url_for, session, Response, send_from_directory
+from flask import Flask, request, jsonify, render_template, redirect, url_for, session, Response, send_from_directory, flash
 from werkzeug.utils import secure_filename
 from PIL import Image, UnidentifiedImageError
 import numpy as np
@@ -28,6 +29,7 @@ from datasets_data import (
     generate_synthetic_ground_truth,
     generate_brats_multimodal_slices
 )
+from auth_db import init_auth_db, create_user, authenticate_user, get_user_by_id
 
 app = Flask(__name__, template_folder='template', static_folder='static')
 app.secret_key = os.environ.get("FLASK_SECRET_KEY", "masthik-anveshan-key-2026")
@@ -37,6 +39,21 @@ ALLOWED_EXTENSIONS = {'png', 'jpg', 'jpeg', 'tif', 'tiff', 'bmp', 'webp'}
 
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 TEST_IMAGES_DIR = os.path.join(CURRENT_DIR, 'test_images')
+
+# Initialize SQLite Authentication Database & seed clinical demo accounts
+init_auth_db()
+
+
+def login_required(f):
+    """Decorator ensuring that only authenticated clinicians can access diagnostic tools."""
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if 'user_id' not in session:
+            if request.path.startswith('/api/'):
+                return jsonify({"status": "error", "message": "Authentication required. Please sign in."}), 401
+            return redirect(url_for('login', next=request.url))
+        return f(*args, **kwargs)
+    return decorated_function
 
 
 def allowed_file(filename: str) -> bool:
@@ -66,6 +83,115 @@ def add_cors_headers(response: Response) -> Response:
 
 
 # ============================================================================
+# CLINICAL AUTHENTICATION ROUTES (LOGIN, SIGNUP, LOGOUT, DEMO LOGIN)
+# ============================================================================
+
+@app.route('/login', methods=['GET', 'POST'])
+def login():
+    """Clinician login view supporting password authentication and instant demo access."""
+    if 'user_id' in session:
+        return redirect(url_for('index'))
+
+    if request.method == 'POST':
+        email = request.form.get('email', '').strip()
+        password = request.form.get('password', '')
+        remember = bool(request.form.get('remember'))
+
+        user = authenticate_user(email, password)
+        if user:
+            session.clear()
+            session['user_id'] = user['id']
+            session['user_name'] = user['name']
+            session['user_email'] = user['email']
+            session['user_role'] = user['role']
+            session['user_institution'] = user['institution']
+            if remember:
+                session.permanent = True
+            flash(f"Welcome back, {user['name']}.", "success")
+            next_url = request.args.get('next')
+            if next_url and not next_url.startswith('//') and not next_url.startswith('http'):
+                return redirect(next_url)
+            return redirect(url_for('index'))
+        else:
+            flash("Invalid clinical email or password. Please verify credentials or use 1-click Demo Clinician access.", "error")
+
+    return render_template('login.html')
+
+
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
+    """Institutional registration for clinicians, researchers, and fellows."""
+    if 'user_id' in session:
+        return redirect(url_for('index'))
+
+    if request.method == 'POST':
+        name = request.form.get('name', '').strip()
+        email = request.form.get('email', '').strip()
+        role = request.form.get('role', 'Neuroradiologist').strip()
+        institution = request.form.get('institution', 'Academic Medical Center').strip()
+        password = request.form.get('password', '')
+        confirm_password = request.form.get('confirm_password', '')
+        terms = request.form.get('terms')
+
+        if not terms:
+            flash("You must acknowledge the research prototype regulatory disclaimer.", "error")
+            return render_template('signup.html')
+
+        if password != confirm_password:
+            flash("Passwords do not match.", "error")
+            return render_template('signup.html')
+
+        res = create_user(name=name, email=email, password=password, role=role, institution=institution)
+        if res.get('status') == 'success':
+            created = res['user']
+            session.clear()
+            session['user_id'] = created['id']
+            session['user_name'] = created['name']
+            session['user_email'] = created['email']
+            session['user_role'] = created['role']
+            session['user_institution'] = created['institution']
+            session.permanent = True
+            flash(f"Clinician account successfully created. Welcome, {created['name']}!", "success")
+            return redirect(url_for('index'))
+        else:
+            flash(res.get('message', 'Registration error occurred.'), "error")
+
+    return render_template('signup.html')
+
+
+@app.route('/logout')
+def logout():
+    """Securely terminates active clinician session."""
+    session.clear()
+    flash("You have been securely signed out of the workstation.", "info")
+    return redirect(url_for('login'))
+
+
+@app.route('/api/auth/demo-login', methods=['POST'])
+def demo_login():
+    """1-Click API endpoint for fast clinical demo evaluation."""
+    data = request.get_json(silent=True) or request.form
+    target_email = data.get('email', 'radhika@neuro.ai')
+
+    user = authenticate_user(target_email, 'password123')
+    if user:
+        session.clear()
+        session['user_id'] = user['id']
+        session['user_name'] = user['name']
+        session['user_email'] = user['email']
+        session['user_role'] = user['role']
+        session['user_institution'] = user['institution']
+        session.permanent = True
+        return jsonify({
+            "status": "success",
+            "message": f"Authenticated as {user['name']}",
+            "user": user,
+            "redirect": url_for('index')
+        })
+    return jsonify({"status": "error", "message": "Demo profile not found"}), 404
+
+
+# ============================================================================
 # SYSTEM HEALTH & STATUS ROUTE
 # ============================================================================
 
@@ -89,15 +215,16 @@ def health_check():
     })
 
 
-
 # ============================================================================
 # PRIMARY WEB WORKSTATION ROUTES
 # ============================================================================
 
 @app.route('/')
+@login_required
 def index():
     """Renders the comprehensive Masthik Anveshan clinical workstation."""
-    return render_template('index.html', datasets=DATASETS_INFO, presets=PRESET_CASES)
+    current_user = get_user_by_id(session['user_id']) if 'user_id' in session else None
+    return render_template('index.html', datasets=DATASETS_INFO, presets=PRESET_CASES, current_user=current_user)
 
 
 @app.route('/api/presets', methods=['GET'])
@@ -310,6 +437,7 @@ def serve_results(filename: str):
 
 
 @app.route('/pred_page')
+@login_required
 def pred_page():
     pred = session.get('pred_label', 'Glioma')
     f_name = session.get('filename', 'test3.jpg')

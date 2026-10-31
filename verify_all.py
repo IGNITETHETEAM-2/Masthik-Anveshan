@@ -10,12 +10,15 @@ import os
 time.sleep(1)
 base_url = 'http://127.0.0.1:5000'
 
-def test(url, method='GET', **kwargs):
+s = requests.Session()
+
+def test(url, method='GET', use_session=False, **kwargs):
     try:
+        client = s if use_session else requests
         if method == 'GET':
-            r = requests.get(url, **kwargs)
+            r = client.get(url, **kwargs)
         else:
-            r = requests.post(url, **kwargs)
+            r = client.post(url, **kwargs)
         status = r.status_code
         ok = (status == 200)
         print(f"{method} {url:<50} -> {status} (OK: {ok})")
@@ -31,12 +34,26 @@ r = test(f"{base_url}/api/health")
 assert r and r.json()['status'] == 'healthy', 'Health check failed'
 print(f"  Health Payload: {r.json()}\n")
 
-# 2. Main Workstation
-r = test(f"{base_url}/")
-assert r and '<!DOCTYPE html>' in r.text, 'Workstation root failed'
+# 2. Authentication Pages (Login & Signup)
+print("--- Verifying Authentication & Access Flow ---")
+r_login = test(f"{base_url}/login")
+assert r_login and 'Clinician Sign In' in r_login.text, 'Login page failed'
 
-# 3. Presets catalog
-r = test(f"{base_url}/api/presets")
+r_signup = test(f"{base_url}/signup")
+assert r_signup and 'Clinician Registration' in r_signup.text, 'Signup page failed'
+
+# 3. 1-Click Demo Clinician Login
+r_auth = test(f"{base_url}/api/auth/demo-login", method='POST', use_session=True, json={'email': 'radhika@neuro.ai'})
+assert r_auth and r_auth.status_code == 200 and r_auth.json().get('status') == 'success'
+print(f"  Clinician Demo Session Established: {r_auth.json()['message']}")
+
+# 4. Authenticated Main Workstation
+r = test(f"{base_url}/", use_session=True)
+assert r and 'Dr. Radhika Muvva, MD' in r.text and 'Chief Neuroradiologist' in r.text, 'Workstation root failed'
+print("  Workstation loaded successfully with clinician badge.")
+
+# 5. Presets catalog
+r = test(f"{base_url}/api/presets", use_session=True)
 presets = r.json()['presets']
 print(f"  Found {len(presets)} registered presets.")
 
@@ -87,7 +104,7 @@ for asset in ['loss_metrics.png', 'accuracy_metrics.png', 'cm.png']:
 
 # 10. Static assets
 print("\n--- Verifying Static Frontend Assets ---")
-for asset in ['css/main.css', 'js/app.js']:
+for asset in ['css/main.css', 'css/auth.css', 'js/app.js']:
     resp = test(f"{base_url}/static/{asset}")
     assert resp.status_code == 200
 

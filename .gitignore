@@ -45,3 +45,10 @@ desktop.ini
 *.log
 *.tmp
 *.bak
+
+# Databases
+*.db
+*.sqlite
+*.sqlite3
+users.db
+
