@@ -21,12 +21,13 @@ start "Masthik Anveshan Server" cmd /k ""!PY_EXE!" "%~dp0app.py""
 echo [*] Waiting 3 seconds for server initialization...
 timeout /t 3 /nobreak >nul
 
-echo [*] Establishing live public HTTPS tunnel via serveo.net...
+echo [*] Establishing live public HTTPS tunnel via localhost.run...
 echo [*] Your public working URL will appear below:
 echo.
 echo =========================================================================
-echo   COPY THE URL BELOW AND PASTE IT IN YOUR GITHUB REPO ABOUT WEBSITE FIELD
+echo   LIVE PUBLIC HTTPS URL:
 echo =========================================================================
 echo.
 
-ssh -o StrictHostKeyChecking=no -R 80:127.0.0.1:5000 serveo.net
+ssh -o StrictHostKeyChecking=no -o ServerAliveInterval=30 -R 80:127.0.0.1:5000 nokey@localhost.run
+

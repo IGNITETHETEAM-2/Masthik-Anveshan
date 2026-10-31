@@ -2,12 +2,13 @@
 
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.14-EE4C2C.svg?logo=pytorch)](https://pytorch.org/)
 [![Flask](https://img.shields.io/badge/Flask-3.1-black.svg?logo=flask)](https://flask.palletsprojects.com/)
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-Online%20Workstation-00f2fe.svg?logo=googlechrome&logoColor=white)](https://a22aac9d53a20336-103-165-15-20.serveousercontent.com)
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Online%20Workstation-00f2fe.svg?logo=googlechrome&logoColor=white)](https://f00edcbeb9794b.lhr.life)
 [![BraTS 2020](https://img.shields.io/badge/Dataset-BraTS%202020-00f2fe.svg)](https://www.med.upenn.edu/cbica/brats2020/)
 [![Jun Cheng Figshare](https://img.shields.io/badge/Dataset-Jun%20Cheng%20Figshare-8b5cf6.svg)](https://figshare.com/articles/brain_tumor_dataset/1512427)
 [![Kaggle 4-Class](https://img.shields.io/badge/Dataset-Kaggle%204--Class-10b981.svg)](https://www.kaggle.com/)
 
-> 🌐 **Public Live Working URL**: [https://a22aac9d53a20336-103-165-15-20.serveousercontent.com](https://a22aac9d53a20336-103-165-15-20.serveousercontent.com)
+> 🌐 **Public Live Working URL**: [https://f00edcbeb9794b.lhr.life](https://f00edcbeb9794b.lhr.life)
+
 > *(Also configured for 1-click cloud deployment via `Procfile` & `render.yaml`)*
 
 **Masthik Anveshan** (Brain Exploration & Investigation) is a clinical-grade neuro-oncology AI diagnostic workstation. It unifies deep learning brain tumor segmentation (inspired by and extending [Muvva-Radhika/Brain_Tumor_Segmentation](https://github.com/Muvva-Radhika/Brain_Tumor_Segmentation)) with multi-class diagnostic classification across all major benchmark datasets.
