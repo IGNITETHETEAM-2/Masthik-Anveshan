@@ -1,41 +1,85 @@
 <!DOCTYPE html>
-<html>
-    
-    <head>
-        <title>neuralBlack</title>
-        <link href="https://fonts.googleapis.com/css?family=Lobster+Two" rel="stylesheet"> 
-        <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,400i,700" rel="stylesheet"> 
-        <link href="https://fonts.googleapis.com/css?family=Concert+One" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=Ubuntu&display=swap" rel="stylesheet"> 
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}"/>
-    </head>
-    
-    <header>
-            <nav>
-              <div class="nav-bg"></div>
-              <ul>
-                <li><a href="/"><img src="{{ url_for('static', filename='images/brain_logo.png') }}" height=40px width=40px alt="neuralBlack"/> <p> neuralBlack</p></a></li>
-              </ul>
-            </nav>
-    </header>
-    
-    <label class="switch">
-        <input type="checkbox">
-        <span class="slider round"></span>
-    </label>
-    
-    <body>
-        <div class="cardpred">
-            <div class="container">
-              <img src="{{ url_for('static', filename='images/' + f_name) }}" height=52.5% width=52.5%/>
-              <p>{{ pred }}</p>
-              <button type="button" id="goHome"><a href="/empty_page" style="text-decoration: None; color: white;">Go home</button>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masthik Anveshan - Classification Result</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Outfit:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}"/>
+    <style>
+        .result-container {
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+        }
+        .result-card {
+            background: rgba(16, 24, 40, 0.85);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(0, 242, 254, 0.2);
+            border-radius: 16px;
+            padding: 2.5rem;
+            max-width: 540px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+        }
+        .result-img-box {
+            width: 260px;
+            height: 260px;
+            margin: 0 auto 1.5rem;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 2px solid rgba(0, 242, 254, 0.3);
+            background: #000;
+        }
+        .result-img-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        .result-badge {
+            display: inline-block;
+            padding: 0.4rem 1.25rem;
+            background: linear-gradient(135deg, rgba(0, 242, 254, 0.2), rgba(121, 40, 202, 0.25));
+            border: 1px solid #00f2fe;
+            border-radius: 30px;
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 1.5rem;
+        }
+    </style>
+</head>
+<body>
+    <header class="top-header">
+        <div class="brand-section">
+            <div class="brand-titles">
+                <h1>Masthik Anveshan</h1>
+                <p>Advanced Brain Tumor Segmentation & Diagnostic Intelligence</p>
             </div>
         </div>
-    </body>
-    
-    <footer>
-      <p style="left: 45.25%;">Made with <img src="{{ url_for('static', filename='images/love.png') }}" height=3% width=3% alt="love"/> by </p><p style="color: white;"><a href="https://github.com/aksh-ai">aksh-ai</a></p>
-    </footer>
+        <a href="/" class="btn-report-print" style="text-decoration: none; font-size: 0.85rem; padding: 0.5rem 1rem;">
+            Return to Workstation
+        </a>
+    </header>
 
+    <main class="result-container">
+        <div class="result-card">
+            <div class="result-img-box">
+                <img src="{{ url_for('static', filename='images/' + f_name) }}" alt="Analyzed Scan">
+            </div>
+            <div class="result-badge">{{ pred }}</div>
+            <p style="color: var(--text-secondary); font-size: 0.9rem; margin-bottom: 2rem;">
+                Scan successfully classified using the ResNet-50 / U-Net neuro-oncology pipeline.
+            </p>
+            <a href="/empty_page" class="btn-primary-action" style="text-decoration: none;">
+                Open Full Diagnostic Workstation
+            </a>
+        </div>
+    </main>
+</body>
 </html>

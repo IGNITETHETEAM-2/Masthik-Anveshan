@@ -1,2 +1,47 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Environments and Bundled Runtimes
+.python/
+.venv/
+venv/
+ENV/
+env/
+env.bak/
+venv.bak/
+
+# Deep Learning Models and Large Binary Weights (>100MB)
+models/
+*.pt
+*.pth
+*.h5
+*.hdf5
+*.onnx
+*.pkl
+*.bin
+
+# Jupyter Notebook checkpoints
 .ipynb_checkpoints/
-models
+*-checkpoint.ipynb
+
+# IDE and Editor configurations
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Operating System files
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db
+ehthumbs.db
+desktop.ini
+
+# Logs and temporary files
+*.log
+*.tmp
+*.bak

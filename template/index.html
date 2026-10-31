@@ -1,45 +1,726 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Masthik Anveshan - Advanced Brain Tumor Segmentation & Diagnostic Intelligence</title>
+    <meta name="description" content="AI-Powered Diagnostic Neuro-Oncology Suite featuring PyTorch U-Net Segmentation, 4-Class Classification, BraTS Multimodal Analysis, and Combined Training Datasets Hub.">
     
-    <head>
-        <title>neuralBlack</title>
-        <link href="https://fonts.googleapis.com/css?family=Lobster+Two" rel="stylesheet"> 
-        <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed:400,400i,700" rel="stylesheet"> 
-        <link href="https://fonts.googleapis.com/css?family=Concert+One" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=Ubuntu&display=swap" rel="stylesheet"> 
-        <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}"/>
-    </head>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     
-    <header>
-            <nav>
-              <div class="nav-bg"></div>
-              <ul>
-                <li><a href="/"><img src="{{ url_for('static', filename='images/brain_logo.png') }}" height=40px width=40px alt="neuralBlack"/> <p> neuralBlack</p></a></li>
-              </ul>
-            </nav>
-    </header>
-    
-    <label class="switch">
-        <input type="checkbox">
-        <span class="slider round"></span>
-    </label>
-    
-    <body>
-        <div class="card">
-          <div class="container">
-            <div class="upload-btn-wrapper">
-                <form name='bt_classifier' action='/' method='POST' enctype="multipart/form-data">
-                  <center><button class="btn">Upload an Image</button></center>
-                  <input type="file" name="bt_image" id="bt_image"/>
-                  <button type='submit' name='submit' id='sub'>Classify</button>
-                </form>
+    <!-- Workstation Stylesheet -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+</head>
+<body>
+
+    <!-- TOP HEADER & NAVIGATION -->
+    <header class="top-header">
+        <div class="brand-section">
+            <div class="brand-logo-glow">
+                <div class="brand-logo-inner">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+                    </svg>
+                </div>
             </div>
-          </div>
+            <div class="brand-titles">
+                <h1>Masthik Anveshan</h1>
+                <p>Advanced Brain Tumor Segmentation & Diagnostic Intelligence Platform</p>
+            </div>
         </div>
-    </body>
 
-    <footer>
-      <p style="left: 45.25%;">Made with <img src="{{ url_for('static', filename='images/love.png') }}" height=3% width=3% alt="love"/> by </p><p style="color: white;"><a href="https://github.com/aksh-ai">aksh-ai</a></p>
-    </footer>
+        <nav class="header-nav">
+            <button class="nav-tab-btn active" data-tab="workstation-tab" id="tabBtnWorkstation">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><line x1="3" y1="9" x2="21" y2="9"/><line x1="9" y1="21" x2="9" y2="9"/></svg>
+                Workstation
+            </button>
+            <button class="nav-tab-btn" data-tab="brats-tab" id="tabBtnBrats">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
+                BraTS Multimodal
+            </button>
+            <button class="nav-tab-btn" data-tab="datasets-tab" id="tabBtnDatasets">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><ellipse cx="12" cy="5" rx="9" ry="3"/><path d="M21 12c0 1.66-4 3-9 3s-9-1.34-9-3"/><path d="M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5"/></svg>
+                Combined Datasets
+            </button>
+            <button class="nav-tab-btn" data-tab="arch-tab" id="tabBtnArch">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+                Model Architecture
+            </button>
+            <button class="nav-tab-btn" data-tab="report-tab" id="tabBtnReport">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+                Clinical Report
+            </button>
+        </nav>
 
+        <div class="system-status-badge">
+            <span class="status-dot"></span>
+            <span>U-Net & Classifier Online (PyTorch 2.14)</span>
+        </div>
+    </header>
+
+    <main class="main-wrapper">
+
+        <!-- ===================================================================
+             TAB 1: DIAGNOSTIC WORKSTATION
+             =================================================================== -->
+        <section id="workstation-tab" class="tab-content active">
+            <div class="workstation-grid">
+                
+                <!-- Left Column: Input & Benchmark Presets -->
+                <div class="panel-inputs">
+                    <div class="glass-panel">
+                        <div class="panel-header">
+                            <h2>
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                                Patient MRI Scan
+                            </h2>
+                            <span class="badge">DICOM / PNG</span>
+                        </div>
+
+                        <!-- Upload Dropzone -->
+                        <div class="upload-dropzone" id="uploadDropzone">
+                            <input type="file" id="fileInput" accept="image/*">
+                            <div class="dropzone-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                            </div>
+                            <h3>Drop MRI Image Here</h3>
+                            <p>or click to browse local files (PNG, JPG, TIFF)</p>
+                        </div>
+
+                        <!-- Benchmark Presets List -->
+                        <div class="presets-container">
+                            <div class="section-label">
+                                <span>Clinical Benchmark Presets</span>
+                                <span>6 Cases</span>
+                            </div>
+                            <div class="presets-list">
+                                {% for p in presets %}
+                                <div class="preset-card {% if loop.first %}active{% endif %}" data-preset-id="{{ p.id }}" id="preset-{{ p.id }}">
+                                    <div class="preset-info">
+                                        <h4>{{ p.title }}</h4>
+                                        <div class="preset-meta">
+                                            <span>{{ p.dataset }}</span>
+                                            <span>&bull;</span>
+                                            <span>{{ p.orientation }}</span>
+                                        </div>
+                                    </div>
+                                    <span class="tag tag-{{ p.class_name.lower().replace(' ', '') }}">{{ p.class_name }}</span>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Center Column: Medical Viewport & Canvas Controls -->
+                <div class="panel-viewport">
+                    <div class="glass-panel viewport-card">
+                        
+                        <!-- Top Viewport Toolbar -->
+                        <div class="viewport-toolbar">
+                            <div class="view-layer-selector">
+                                <button class="layer-btn active" data-layer="overlay" id="btnLayerOverlay">Overlay Mask</button>
+                                <button class="layer-btn" data-layer="heatmap" id="btnLayerHeatmap">Probability Heatmap</button>
+                                <button class="layer-btn" data-layer="brats" id="btnLayerBrats">BraTS Multi-Region</button>
+                                <button class="layer-btn" data-layer="binary" id="btnLayerBinary">Binary Mask</button>
+                                <button class="layer-btn" data-layer="raw" id="btnLayerRaw">Raw MRI</button>
+                                <button class="layer-btn" data-layer="split" id="btnLayerSplit">Split Compare</button>
+                                <button class="layer-btn" data-layer="gt" id="btnLayerGt">Ground Truth</button>
+                            </div>
+                        </div>
+
+                        <!-- High-Definition Viewport Screen -->
+                        <div class="viewport-container" id="viewportContainer">
+                            <!-- Background Raw MRI -->
+                            <img id="mriRawLayer" class="mri-display-layer" alt="Brain MRI Scan">
+                            
+                            <!-- Overlaid Prediction Layer -->
+                            <img id="mriOverlayLayer" class="mri-display-layer" alt="Segmentation Overlay">
+
+                            <!-- Interactive Split Screen Slider -->
+                            <div class="split-view-wrapper" id="splitViewWrapper">
+                                <div class="split-view-before">
+                                    <img id="splitBeforeImg" alt="Before Slice">
+                                </div>
+                                <div class="split-view-slider" id="splitSlider" style="left: 50%;">
+                                    <div class="split-view-handle" id="splitHandle">
+                                        <svg viewBox="0 0 24 24"><path d="M8 7l-5 5 5 5V7zm8 0v10l5-5-5-5z"/></svg>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- HUD Top Indicators -->
+                            <div class="viewport-hud-top">
+                                <span class="hud-chip" id="hudClass">ANALYZING...</span>
+                                <span class="hud-chip" id="hudPixels">0 PX</span>
+                                <span class="hud-chip" id="hudCoverage">0.0% COVERAGE</span>
+                            </div>
+                        </div>
+
+                        <!-- Control Sliders Bar -->
+                        <div class="control-sliders-bar">
+                            <div class="slider-group">
+                                <div class="slider-header">
+                                    <span>U-Net Probability Threshold</span>
+                                    <span id="thresholdVal">0.50</span>
+                                </div>
+                                <input type="range" id="thresholdSlider" min="0.10" max="0.90" step="0.05" value="0.50">
+                            </div>
+                            <div class="slider-group">
+                                <div class="slider-header">
+                                    <span>Mask Layer Opacity</span>
+                                    <span id="opacityVal">65%</span>
+                                </div>
+                                <input type="range" id="opacitySlider" min="0.10" max="1.0" step="0.05" value="0.65">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Diagnostic Intelligence & Morphometrics -->
+                <div class="panel-analytics">
+                    <div class="analytics-stack">
+                        
+                        <!-- Primary Diagnosis Banner -->
+                        <div class="diagnosis-banner">
+                            <div class="diagnosis-header">
+                                <div class="diagnosis-title">
+                                    <p>PRIMARY RADIOLOGICAL IMPRESSION</p>
+                                    <h3 id="diagTitle">Loading...</h3>
+                                    <p id="diagSubtype">WHO Histological Classification</p>
+                                </div>
+                                <div class="confidence-badge">
+                                    <div class="confidence-val" id="diagConfidence">95.0%</div>
+                                    <div class="confidence-lbl">CONFIDENCE</div>
+                                </div>
+                            </div>
+                            <p class="diagnosis-desc" id="diagDesc">Evaluating scan morphometrics and tissue density...</p>
+                            
+                            <!-- Probability Distribution Across 4 Classes -->
+                            <div class="confidence-breakdown">
+                                <div class="prob-row">
+                                    <span class="prob-label">Glioma</span>
+                                    <div class="prob-bar-track"><div class="prob-bar-fill bar-glioma" id="barGlioma" style="width: 0%;"></div></div>
+                                    <span class="prob-pct" id="pctGlioma">0%</span>
+                                </div>
+                                <div class="prob-row">
+                                    <span class="prob-label">Meningioma</span>
+                                    <div class="prob-bar-track"><div class="prob-bar-fill bar-meningioma" id="barMeningioma" style="width: 0%;"></div></div>
+                                    <span class="prob-pct" id="pctMeningioma">0%</span>
+                                </div>
+                                <div class="prob-row">
+                                    <span class="prob-label">Pituitary</span>
+                                    <div class="prob-bar-track"><div class="prob-bar-fill bar-pituitary" id="barPituitary" style="width: 0%;"></div></div>
+                                    <span class="prob-pct" id="pctPituitary">0%</span>
+                                </div>
+                                <div class="prob-row">
+                                    <span class="prob-label">No Tumor</span>
+                                    <div class="prob-bar-track"><div class="prob-bar-fill bar-notumor" id="barNoTumor" style="width: 0%;"></div></div>
+                                    <span class="prob-pct" id="pctNoTumor">0%</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Quantitative Morphometrics Card -->
+                        <div class="glass-panel">
+                            <div class="panel-header">
+                                <h2>
+                                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                                    Quantitative Morphometrics
+                                </h2>
+                                <span class="badge" id="diagUrgency">Evaluation</span>
+                            </div>
+
+                            <div class="morph-metrics-grid">
+                                <div class="metric-cell">
+                                    <div class="metric-cell-lbl">Estimated Area</div>
+                                    <div class="metric-cell-val highlight-cyan" id="metricArea">0 mm²</div>
+                                    <div class="metric-cell-sub">1.0mm isotropic grid</div>
+                                </div>
+                                <div class="metric-cell">
+                                    <div class="metric-cell-lbl">Tumor Pixel Mass</div>
+                                    <div class="metric-cell-val highlight-emerald" id="metricPixels">0</div>
+                                    <div class="metric-cell-sub">positive segmentation</div>
+                                </div>
+                                <div class="metric-cell">
+                                    <div class="metric-cell-lbl">Max Diameter</div>
+                                    <div class="metric-cell-val highlight-amber" id="metricDiameter">0 mm</div>
+                                    <div class="metric-cell-sub">equivalent circle</div>
+                                </div>
+                                <div class="metric-cell">
+                                    <div class="metric-cell-lbl">Dice Score vs GT</div>
+                                    <div class="metric-cell-val highlight-violet" id="metricDice">0.892</div>
+                                    <div class="metric-cell-sub">similarity index</div>
+                                </div>
+                            </div>
+
+                            <div style="margin-top: 1rem; padding-top: 0.75rem; border-top: 1px solid rgba(255, 255, 255, 0.06);">
+                                <div class="section-label">
+                                    <span>Anatomical Localization</span>
+                                    <span id="metricCentroid">X:120, Y:120</span>
+                                </div>
+                                <p style="font-size: 0.85rem; color: #fff; font-weight: 500;" id="metricLocation">Cerebral Hemisphere</p>
+                            </div>
+
+                            <!-- BraTS Subregions Breakdown -->
+                            <div style="margin-top: 1rem; padding-top: 0.75rem; border-top: 1px solid rgba(255, 255, 255, 0.06);">
+                                <div class="section-label">
+                                    <span>BraTS Sub-Region Decomposition</span>
+                                </div>
+                                <div class="subregions-list">
+                                    <div class="subregion-item">
+                                        <span><span class="subregion-dot" style="background: #2563eb;"></span>Necrotic Core (NCR)</span>
+                                        <span id="subNcr" style="font-family: var(--font-mono); color: #93c5fd;">0 px</span>
+                                    </div>
+                                    <div class="subregion-item">
+                                        <span><span class="subregion-dot" style="background: #dc2626;"></span>Enhancing Rim (ET)</span>
+                                        <span id="subEt" style="font-family: var(--font-mono); color: #fca5a5;">0 px</span>
+                                    </div>
+                                    <div class="subregion-item">
+                                        <span><span class="subregion-dot" style="background: #16a34a;"></span>Peritumoral Edema (ED)</span>
+                                        <span id="subEd" style="font-family: var(--font-mono); color: #86efac;">0 px</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- CTA to Open Clinical Report -->
+                        <button class="btn-primary-action" id="btnOpenReportTab">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+                            Generate Clinical Diagnostic Report
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ===================================================================
+             TAB 2: BRATS MULTIMODAL MRI LABORATORY
+             =================================================================== -->
+        <section id="brats-tab" class="tab-content">
+            <div class="datasets-hub-header">
+                <h2>BraTS Multi-Parametric MRI Laboratory</h2>
+                <p>Four co-registered 3D MRI sequences (FLAIR, T1, T1-contrast enhanced, T2) capturing distinct biophysical tissue compartments for clinical tumor segmentation.</p>
+            </div>
+
+            <!-- 4-Quadrant Synchronized Viewer -->
+            <div class="brats-quad-viewer">
+                <div class="quad-cell">
+                    <div class="quad-header">
+                        <h3>1. T1-Weighted Native (T1)</h3>
+                        <span class="badge">Structural Anatomy</span>
+                    </div>
+                    <div class="quad-screen">
+                        <img id="quadT1" alt="T1 Native MRI">
+                    </div>
+                    <p class="quad-desc">Delineates normal anatomy; CSF appears dark (hypointense) while white matter appears bright. Useful for identifying non-enhancing necrotic cores.</p>
+                </div>
+
+                <div class="quad-cell">
+                    <div class="quad-header">
+                        <h3>2. T1 Contrast-Enhanced (T1ce)</h3>
+                        <span class="badge">Gadolinium DTPA</span>
+                    </div>
+                    <div class="quad-screen">
+                        <img id="quadT1ce" alt="T1-CE MRI">
+                    </div>
+                    <p class="quad-desc">Highlights blood-brain barrier breakdown. Active neoplastic cells and hyper-vascular enhancing margins (ET) glow brightly.</p>
+                </div>
+
+                <div class="quad-cell">
+                    <div class="quad-header">
+                        <h3>3. T2-Weighted Spin Echo (T2)</h3>
+                        <span class="badge">Tissue Water & Swelling</span>
+                    </div>
+                    <div class="quad-screen">
+                        <img id="quadT2" alt="T2 MRI">
+                    </div>
+                    <p class="quad-desc">Water and free fluid appear bright. Accurately reveals general cellular swelling and tumor margins against healthy parenchyma.</p>
+                </div>
+
+                <div class="quad-cell">
+                    <div class="quad-header">
+                        <h3>4. Fluid Attenuated Inversion Recovery (FLAIR)</h3>
+                        <span class="badge">Edema Delineation</span>
+                    </div>
+                    <div class="quad-screen">
+                        <img id="quadFlair" alt="FLAIR MRI">
+                    </div>
+                    <p class="quad-desc">Free fluid in ventricles is nulled (darkened), allowing peritumoral vasogenic edema (ED) to stand out with exceptional contrast.</p>
+                </div>
+            </div>
+
+            <!-- Clinical Significance Matrix -->
+            <div class="glass-panel">
+                <div class="panel-header">
+                    <h2>Sub-Region Classification in BraTS Challenge</h2>
+                    <span class="badge" id="quadCaseTitle">BraTS 2020 Multi-Channel</span>
+                </div>
+                <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1rem;">
+                    <div class="metric-cell" style="border-left: 3px solid #2563eb;">
+                        <h4 style="color: #93c5fd; margin-bottom: 0.3rem;">Necrotic / Non-Enhancing Core (NCR/NET)</h4>
+                        <p style="font-size: 0.78rem; color: var(--text-secondary);">Dead tissue center from rapid tumor outgrowth of blood supply. Hypointense on T1 and T1ce.</p>
+                    </div>
+                    <div class="metric-cell" style="border-left: 3px solid #dc2626;">
+                        <h4 style="color: #fca5a5; margin-bottom: 0.3rem;">Enhancing Tumor (ET)</h4>
+                        <p style="font-size: 0.78rem; color: var(--text-secondary);">Actively dividing malignant tissue rim with disrupted blood-brain barrier. Avidly enhances on T1ce.</p>
+                    </div>
+                    <div class="metric-cell" style="border-left: 3px solid #16a34a;">
+                        <h4 style="color: #86efac; margin-bottom: 0.3rem;">Peritumoral Edema (ED)</h4>
+                        <p style="font-size: 0.78rem; color: var(--text-secondary);">Vasogenic fluid infiltration into surrounding brain parenchyma. Exceptionally bright on T2-FLAIR.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================================================================
+             TAB 3: COMBINED TRAINING DATASETS HUB
+             =================================================================== -->
+        <section id="datasets-tab" class="tab-content">
+            <div class="datasets-hub-header">
+                <h2>Combined Brain Tumor Training Datasets</h2>
+                <p>Masthik Anveshan integrates the three benchmark medical imaging datasets into a unified diagnostic and segmentation framework.</p>
+            </div>
+
+            <!-- 3 Dataset Summary Cards -->
+            <div class="datasets-cards-grid">
+                
+                <!-- Dataset 1: BraTS 2020 -->
+                <div class="dataset-card">
+                    <div>
+                        <span class="dataset-badge" style="background: rgba(6, 182, 212, 0.15); color: #38bdf8; border: 1px solid rgba(6, 182, 212, 0.3);">MICCAI Gold Standard</span>
+                        <h3>BraTS 2020 Challenge</h3>
+                        <div class="dataset-org">CBICA / University of Pennsylvania</div>
+                        <p>Multi-parametric 3D MRI scans focusing on Glioblastoma (GBM) and Lower Grade Glioma (LGG) with clinically verified sub-compartment ground truths.</p>
+                    </div>
+                    <div>
+                        <div class="dataset-stats-list">
+                            <div>
+                                <div class="stat-item-lbl">Total Volumes</div>
+                                <div class="stat-item-val">369 (Train)</div>
+                            </div>
+                            <div>
+                                <div class="stat-item-lbl">Total Slices</div>
+                                <div class="stat-item-val">57,195</div>
+                            </div>
+                            <div>
+                                <div class="stat-item-lbl">Modalities</div>
+                                <div class="stat-item-val">4 Co-registered</div>
+                            </div>
+                            <div>
+                                <div class="stat-item-lbl">Mean Dice (WT)</div>
+                                <div class="stat-item-val" style="color: var(--accent-emerald);">0.892</div>
+                            </div>
+                        </div>
+                        <button class="btn-primary-action btn-load-sample" data-preset-id="brats_gbm_01" style="font-size: 0.82rem; padding: 0.6rem;">
+                            Load BraTS Case to Workstation
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Dataset 2: Jun Cheng Figshare -->
+                <div class="dataset-card">
+                    <div>
+                        <span class="dataset-badge" style="background: rgba(139, 92, 246, 0.15); color: #c084fc; border: 1px solid rgba(139, 92, 246, 0.3);">Figshare Repository</span>
+                        <h3>Jun Cheng Figshare</h3>
+                        <div class="dataset-org">Southern Medical University, Guangzhou</div>
+                        <p>3,064 T1-weighted contrast-enhanced images from 233 patients covering Meningioma, Glioma, and Pituitary tumors with expert radiologist boundary contours.</p>
+                    </div>
+                    <div>
+                        <div class="dataset-stats-list">
+                            <div>
+                                <div class="stat-item-lbl">Total Slices</div>
+                                <div class="stat-item-val">3,064</div>
+                            </div>
+                            <div>
+                                <div class="stat-item-lbl">Patient Count</div>
+                                <div class="stat-item-val">233 Patients</div>
+                            </div>
+                            <div>
+                                <div class="stat-item-lbl">Matrix Size</div>
+                                <div class="stat-item-val">512 x 512</div>
+                            </div>
+                            <div>
+                                <div class="stat-item-lbl">Reported Acc</div>
+                                <div class="stat-item-val" style="color: var(--accent-emerald);">99.3%</div>
+                            </div>
+                        </div>
+                        <button class="btn-primary-action btn-load-sample" data-preset-id="cheng_meningioma_02" style="font-size: 0.82rem; padding: 0.6rem;">
+                            Load Figshare Case to Workstation
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Dataset 3: Kaggle Unified -->
+                <div class="dataset-card">
+                    <div>
+                        <span class="dataset-badge" style="background: rgba(16, 185, 129, 0.15); color: #34d399; border: 1px solid rgba(16, 185, 129, 0.3);">4-Class Diagnostic</span>
+                        <h3>Kaggle Unified Benchmark</h3>
+                        <div class="dataset-org">Sartaj Bhuvaji & Masoud Nickparvar</div>
+                        <p>Unified dataset amalgamating multiple hospital centers into four balanced diagnostic categories, incorporating 2,000 healthy negative controls.</p>
+                    </div>
+                    <div>
+                        <div class="dataset-stats-list">
+                            <div>
+                                <div class="stat-item-lbl">Total Scans</div>
+                                <div class="stat-item-val">7,023</div>
+                            </div>
+                            <div>
+                                <div class="stat-item-lbl">Categories</div>
+                                <div class="stat-item-val">4 Classes</div>
+                            </div>
+                            <div>
+                                <div class="stat-item-lbl">Controls</div>
+                                <div class="stat-item-val">2,000 Healthy</div>
+                            </div>
+                            <div>
+                                <div class="stat-item-lbl">Validation Acc</div>
+                                <div class="stat-item-val" style="color: var(--accent-emerald);">98.8%</div>
+                            </div>
+                        </div>
+                        <button class="btn-primary-action btn-load-sample" data-preset-id="kaggle_pituitary_03" style="font-size: 0.82rem; padding: 0.6rem;">
+                            Load Kaggle Case to Workstation
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Comprehensive Comparison Table -->
+            <div class="glass-panel">
+                <div class="panel-header">
+                    <h2>Cross-Dataset Architectural Specifications</h2>
+                    <span class="badge">Combined Suite</span>
+                </div>
+                <div style="overflow-x: auto;">
+                    <table class="report-meta-table" style="background: transparent; color: #fff; border-color: rgba(255,255,255,0.08);">
+                        <thead>
+                            <tr style="background: rgba(255,255,255,0.04);">
+                                <th style="background: transparent; color: var(--accent-cyan);">Dataset Name</th>
+                                <th style="background: transparent; color: var(--accent-cyan);">Primary Purpose</th>
+                                <th style="background: transparent; color: var(--accent-cyan);">Classes / Regions</th>
+                                <th style="background: transparent; color: var(--accent-cyan);">Sequences Used</th>
+                                <th style="background: transparent; color: var(--accent-cyan);">Target Model</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="border-color: rgba(255,255,255,0.06); font-weight: 600;">BraTS 2020</td>
+                                <td style="border-color: rgba(255,255,255,0.06);">3D Multi-modal Lesion Segmentation</td>
+                                <td style="border-color: rgba(255,255,255,0.06);">WT (Whole), TC (Core), ET (Enhancing)</td>
+                                <td style="border-color: rgba(255,255,255,0.06);">FLAIR, T1, T1-CE, T2</td>
+                                <td style="border-color: rgba(255,255,255,0.06); color: var(--accent-cyan);">PyTorch U-Net</td>
+                            </tr>
+                            <tr>
+                                <td style="border-color: rgba(255,255,255,0.06); font-weight: 600;">Jun Cheng Figshare</td>
+                                <td style="border-color: rgba(255,255,255,0.06);">Contrast-Enhanced Classification</td>
+                                <td style="border-color: rgba(255,255,255,0.06);">Meningioma, Glioma, Pituitary</td>
+                                <td style="border-color: rgba(255,255,255,0.06);">T1-Weighted Contrast Enhanced</td>
+                                <td style="border-color: rgba(255,255,255,0.06); color: var(--accent-cyan);">ResNet50 / U-Net</td>
+                            </tr>
+                            <tr>
+                                <td style="border-color: rgba(255,255,255,0.06); font-weight: 600;">Kaggle Nickparvar</td>
+                                <td style="border-color: rgba(255,255,255,0.06);">4-Class Differential Diagnosis</td>
+                                <td style="border-color: rgba(255,255,255,0.06);">Glioma, Meningioma, Pituitary, Normal</td>
+                                <td style="border-color: rgba(255,255,255,0.06);">Multi-plane Axial/Coronal/Sagittal</td>
+                                <td style="border-color: rgba(255,255,255,0.06); color: var(--accent-cyan);">Deep CNN Classifier</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================================================================
+             TAB 4: ARCHITECTURE & TRAINING LAB
+             =================================================================== -->
+        <section id="arch-tab" class="tab-content">
+            <div class="datasets-hub-header">
+                <h2>Deep Learning Model Architecture & Training Lab</h2>
+                <p>Technical blueprint of the PyTorch U-Net segmentation network matching the reference repository, alongside ResNet classifier evaluation metrics.</p>
+            </div>
+
+            <!-- U-Net Architecture Blueprint -->
+            <div class="arch-visual-container">
+                <div class="panel-header">
+                    <h2>U-Net Contracting-Expanding Architecture Schema</h2>
+                    <span class="badge">PyTorch Implementation</span>
+                </div>
+                <div class="network-diagram-box">
+                    <pre class="unet-pipeline-ascii">
+[Input MRI Scan: (240 x 240 x 1/4)]
+       │
+       ▼
+[Encoder Level 1: Conv2D(32) -> BatchNorm -> ReLU -> Conv2D(32)] ───────── [Skip Concatenation 1] ────────┐
+       │ (MaxPool 2x2)                                                                                     │
+       ▼                                                                                                   │
+[Encoder Level 2: Conv2D(64) -> BatchNorm -> ReLU -> Conv2D(64)] ───── [Skip Concatenation 2] ─────┐      │
+       │ (MaxPool 2x2)                                                                              │      │
+       ▼                                                                                            │      │
+[Encoder Level 3: Conv2D(128) -> BatchNorm -> ReLU -> Conv2D(128)] ─ [Skip Concatenation 3] ─┐     │      │
+       │ (MaxPool 2x2)                                                                       │     │      │
+       ▼                                                                                     │     │      │
+[Bottleneck: Conv2D(256) -> BatchNorm -> ReLU -> Conv2D(256)]                                │     │      │
+       │                                                                                     │     │      │
+       ▼ (UpSample 2x2 + Concat)                                                             │     │      │
+[Decoder Level 1: Conv2D(128) -> ReLU -> Conv2D(128)] <──────────────────────────────────────┘     │      │
+       │                                                                                           │      │
+       ▼ (UpSample 2x2 + Concat)                                                                   │      │
+[Decoder Level 2: Conv2D(64) -> ReLU -> Conv2D(64)] <──────────────────────────────────────────────┘      │
+       │                                                                                                  │
+       ▼ (UpSample 2x2 + Concat)                                                                          │
+[Decoder Level 3: Conv2D(32) -> ReLU -> Conv2D(32)] <─────────────────────────────────────────────────────┘
+       │
+       ▼
+[Output Head 1: 1x1 Conv (Sigmoid) -> Tumor Probability Map (240 x 240 x 1)]
+[Output Head 2: 1x1 Conv (Sigmoid) -> BraTS Sub-Regions (NCR / ED / ET)]
+                    </pre>
+                </div>
+            </div>
+
+            <!-- Training Curves & Evaluation Metrics -->
+            <div class="training-curves-grid">
+                <div class="curve-card">
+                    <div class="panel-header">
+                        <h2>Classifier Loss Progression</h2>
+                        <span class="badge">Cross-Entropy</span>
+                    </div>
+                    <img src="/results/loss_metrics.png" alt="Loss Curves">
+                    <p style="font-size: 0.78rem; color: var(--text-secondary); margin-top: 0.5rem;">Training vs validation loss across epochs showing steady convergence without overfitting.</p>
+                </div>
+
+                <div class="curve-card">
+                    <div class="panel-header">
+                        <h2>Classification Accuracy Progression</h2>
+                        <span class="badge">99.3% Accuracy</span>
+                    </div>
+                    <img src="/results/accuracy_metrics.png" alt="Accuracy Curves">
+                    <p style="font-size: 0.78rem; color: var(--text-secondary); margin-top: 0.5rem;">Training and validation accuracy curve achieving 99.3% top-1 accuracy on unseen test partitions.</p>
+                </div>
+
+                <div class="curve-card">
+                    <div class="panel-header">
+                        <h2>Test Partition Confusion Matrix</h2>
+                        <span class="badge">4-Class Split</span>
+                    </div>
+                    <img src="/results/cm.png" alt="Confusion Matrix">
+                    <p style="font-size: 0.78rem; color: var(--text-secondary); margin-top: 0.5rem;">High true-positive rates across Glioma, Meningioma, Pituitary, and healthy controls.</p>
+                </div>
+
+                <div class="curve-card">
+                    <div class="panel-header">
+                        <h2>U-Net Hyperparameter Specifications</h2>
+                        <span class="badge">Optimization</span>
+                    </div>
+                    <div style="padding: 0.5rem 0;">
+                        <div class="stat-item-lbl" style="margin-top: 0.5rem;">Optimization Algorithm</div>
+                        <div style="font-family: var(--font-mono); font-size: 0.95rem; color: #fff;">Adam Optimizer (lr = 1e-4, beta1 = 0.9, beta2 = 0.999)</div>
+
+                        <div class="stat-item-lbl" style="margin-top: 0.75rem;">Loss Function</div>
+                        <div style="font-family: var(--font-mono); font-size: 0.95rem; color: #fff;">Compound Loss: Binary Cross-Entropy + Soft Dice Loss</div>
+
+                        <div class="stat-item-lbl" style="margin-top: 0.75rem;">Batch Size & Epochs</div>
+                        <div style="font-family: var(--font-mono); font-size: 0.95rem; color: #fff;">Batch Size = 8, Early Stopping Patience = 12</div>
+
+                        <div class="stat-item-lbl" style="margin-top: 0.75rem;">Data Augmentations</div>
+                        <div style="font-family: var(--font-mono); font-size: 0.95rem; color: #fff;">Random Horizontal Flips (p=0.5), CLAHE Contrast, Elastic Deformation</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ===================================================================
+             TAB 5: CLINICAL DIAGNOSTIC REPORT
+             =================================================================== -->
+        <section id="report-tab" class="tab-content">
+            <div class="report-sheet-container">
+                <div class="report-header">
+                    <div class="report-hospital-title">
+                        <h2>MASTHIK ANVESHAN CLINICAL REPORT</h2>
+                        <p>Department of Diagnostic Neuro-Radiology & Oncology Intelligence</p>
+                    </div>
+                    <div style="text-align: right;">
+                        <div style="font-family: var(--font-mono); font-size: 0.9rem; font-weight: 700;" id="reportPatientId">MA-849201</div>
+                        <div style="font-size: 0.78rem; color: #64748b;" id="reportDate">October 31, 2026</div>
+                    </div>
+                </div>
+
+                <!-- Metadata Table -->
+                <table class="report-meta-table">
+                    <tr>
+                        <th>Study Type:</th>
+                        <td id="reportModality">Brain MRI Contrast Enhanced</td>
+                        <th>Algorithm Version:</th>
+                        <td>PyTorch U-Net v2.4 + ResNet50</td>
+                    </tr>
+                    <tr>
+                        <th>Estimated Lesion Area:</th>
+                        <td id="reportArea">Loading...</td>
+                        <th>Anatomical Location:</th>
+                        <td id="reportLocation">Loading...</td>
+                    </tr>
+                    <tr>
+                        <th>Risk Assessment:</th>
+                        <td id="reportSeverity" colspan="3" style="font-weight: 700; color: #b91c1c;">Evaluation Pending</td>
+                    </tr>
+                </table>
+
+                <h3 class="report-section-title">Radiological Findings & Impression</h3>
+                <div class="report-findings-box" id="reportImpression">
+                    Loading diagnostic findings...
+                </div>
+
+                <h3 class="report-section-title">Imaging Evidence & U-Net Segmentation</h3>
+                <div class="report-thumbnails-row">
+                    <div class="report-thumb">
+                        <img id="reportThumbRaw" alt="Raw Scan">
+                        <span>Raw MRI Slice</span>
+                    </div>
+                    <div class="report-thumb">
+                        <img id="reportThumbOverlay" alt="Segmentation Overlay">
+                        <span>U-Net Mask Overlay</span>
+                    </div>
+                    <div class="report-thumb">
+                        <img id="reportThumbHeatmap" alt="Probability Heatmap">
+                        <span>Probability Heatmap</span>
+                    </div>
+                </div>
+
+                <h3 class="report-section-title">Recommended Clinical Next Steps</h3>
+                <div class="report-findings-box" style="margin-bottom: 0;">
+                    1. Correlate with clinical neurological deficits, cranial nerve exams, and prior neuro-imaging studies.<br>
+                    2. Recommended multidisciplinary neuro-oncology tumor board review for stereotactic biopsy or surgical resection planning.<br>
+                    3. High-resolution volumetric 3D contrast follow-up indicated in 4-6 weeks to assess progression dynamics.
+                </div>
+
+                <div class="report-signoff">
+                    <div>
+                        <strong>Verified By:</strong> Automated AI Diagnostic Sub-System<br>
+                        <em>Masthik Anveshan Intelligence Engine</em>
+                    </div>
+                    <div style="text-align: right;">
+                        <strong>Attending Neuro-Radiologist:</strong><br>
+                        ________________________________________ (Signature)
+                    </div>
+                </div>
+            </div>
+
+            <!-- Print Actions Bar -->
+            <div class="report-actions-bar">
+                <button class="btn-report-print" id="btnPrintReport">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+                    Print / Export Clinical Report PDF
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Client Script -->
+    <script src="{{ url_for('static', filename='js/app.js') }}"></script>
+</body>
 </html>
