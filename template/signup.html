@@ -4,265 +4,192 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Masthik Anveshan - Clinician Registration</title>
-    <meta name="description" content="Register institutional clinician credentials for Masthik Anveshan Brain Tumor Segmentation Platform.">
+    <meta name="description" content="Register institutional credentials for Masthik Anveshan Brain Tumor Segmentation Platform.">
     
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
     
-    <!-- Authentication Stylesheet -->
+    <!-- Clean Auth Stylesheet -->
     <link rel="stylesheet" href="{{ url_for('static', filename='css/auth.css') }}">
 </head>
 <body class="auth-body">
 
-    <!-- Background Grid -->
+    <!-- Subtle Background Grid -->
     <div class="auth-grid-bg"></div>
 
-    <div class="auth-container">
+    <!-- Centered Registration Card -->
+    <div class="auth-card-container">
         
-        <!-- LEFT: Showcase & Capability Column -->
-        <div class="auth-hero">
-            <div>
-                <!-- Brand Header -->
-                <div class="auth-brand">
-                    <div class="auth-logo-badge">
-                        <div class="auth-logo-inner">
-                            <svg viewBox="0 0 24 24">
-                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="auth-brand-text">
-                        <h1>Masthik Anveshan</h1>
-                        <p>Institutional Clinical Suite</p>
-                    </div>
-                </div>
-
-                <!-- Headline -->
-                <div class="auth-hero-headline">
-                    <h2>Join the <span>Neuro-AI</span> Research Network</h2>
-                    <p>
-                        Empowering neurosurgeons, radiologists, and oncology researchers with real-time
-                        volumetric segmentation and differential diagnosis pipelines.
-                    </p>
-                </div>
-
-                <!-- Feature Highlights -->
-                <div class="auth-features-list">
-                    <div class="auth-feat-item">
-                        <div class="auth-feat-icon">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
-                        </div>
-                        <div class="auth-feat-text">
-                            <h4>Automated PDF Diagnostic Reports</h4>
-                            <p>Generate multi-page clinical dossiers with volumetric tables, pixel spacing, and tumor masks.</p>
-                        </div>
-                    </div>
-
-                    <div class="auth-feat-item">
-                        <div class="auth-feat-icon">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>
-                        </div>
-                        <div class="auth-feat-text">
-                            <h4>BraTS 4-Channel Modalities</h4>
-                            <p>Inspect co-registered T1, T1ce, T2, and FLAIR cross-sectional MRI sequences.</p>
-                        </div>
-                    </div>
-
-                    <div class="auth-feat-item">
-                        <div class="auth-feat-icon">
-                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
-                        </div>
-                        <div class="auth-feat-text">
-                            <h4>Adjustable Inference Probability</h4>
-                            <p>Interactive Dice threshold modulation for surgical margin precision assessment.</p>
-                        </div>
-                    </div>
-                </div>
+        <!-- Brand Header -->
+        <div class="auth-brand-header">
+            <div class="auth-logo-icon">
+                <svg viewBox="0 0 24 24">
+                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+                </svg>
             </div>
-
-            <!-- Footer Badge -->
-            <div class="auth-hero-footer">
-                <div class="auth-trust-badge">
-                    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-                    <span>Secure Local SQLite Database</span>
-                </div>
-                <span>Masthik Anveshan v2.4</span>
-            </div>
+            <div class="auth-brand-title">Masthik <span>Anveshan</span></div>
+            <h2 class="auth-page-title">Clinician Registration</h2>
+            <p class="auth-page-desc">Create your institutional clinician account to access the workstation</p>
         </div>
 
-        <!-- RIGHT: Registration Form Panel -->
-        <div class="auth-form-panel">
-            <div class="auth-form-header">
-                <h3>Clinician Registration</h3>
-                <p>Register your credentials for access to the diagnostic workstation</p>
+        <!-- Flash Alerts -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="auth-flash {{ category }}">
+                        {% if category == 'error' %}
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
+                        {% elif category == 'success' %}
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
+                        {% else %}
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
+                        {% endif %}
+                        <span>{{ message }}</span>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <!-- Registration Form -->
+        <form action="{{ url_for('signup') }}" method="POST" class="auth-form" id="signupForm">
+            
+            <!-- Full Name -->
+            <div class="form-group">
+                <label class="form-label" for="regName">Full Name</label>
+                <div class="input-wrapper">
+                    <span class="input-icon">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                    </span>
+                    <input 
+                        type="text" 
+                        id="regName" 
+                        name="name" 
+                        class="auth-input" 
+                        placeholder="Dr. John Doe, MD" 
+                        required 
+                        autocomplete="name"
+                    >
+                </div>
             </div>
 
-            <!-- Flash Alerts -->
-            {% with messages = get_flashed_messages(with_categories=true) %}
-                {% if messages %}
-                    {% for category, message in messages %}
-                        <div class="auth-flash {{ category }}">
-                            {% if category == 'error' %}
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="10" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/></svg>
-                            {% elif category == 'success' %}
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg>
-                            {% else %}
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg>
-                            {% endif %}
-                            <span>{{ message }}</span>
-                        </div>
-                    {% endfor %}
-                {% endif %}
-            {% endwith %}
+            <!-- Email Address -->
+            <div class="form-group">
+                <label class="form-label" for="regEmail">Clinical Email Address</label>
+                <div class="input-wrapper">
+                    <span class="input-icon">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    </span>
+                    <input 
+                        type="email" 
+                        id="regEmail" 
+                        name="email" 
+                        class="auth-input" 
+                        placeholder="jdoe@hospital.org" 
+                        required 
+                        autocomplete="username"
+                    >
+                </div>
+            </div>
 
-            <!-- Registration Form -->
-            <form action="{{ url_for('signup') }}" method="POST" class="auth-form" id="signupForm">
-                
-                <!-- Full Name -->
+            <!-- Two-Column: Role & Institution -->
+            <div class="form-row">
                 <div class="form-group">
-                    <label class="form-label" for="regName">Full Name & Title</label>
+                    <label class="form-label" for="regRole">Clinical Role</label>
                     <div class="input-wrapper">
                         <span class="input-icon">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+                        </span>
+                        <select id="regRole" name="role" class="auth-select" required>
+                            <option value="Neuroradiologist" selected>Neuroradiologist</option>
+                            <option value="Neurosurgeon">Neurosurgeon</option>
+                            <option value="Medical Imaging Researcher">Medical Researcher</option>
+                            <option value="Clinical Fellow">Clinical Fellow</option>
+                            <option value="Radiation Oncologist">Radiation Oncologist</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="regInstitution">Hospital / Institution</label>
+                    <div class="input-wrapper">
+                        <span class="input-icon">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="2" width="18" height="20" rx="2"/><line x1="9" y1="2" x2="9" y2="22"/><line x1="15" y1="2" x2="15" y2="22"/></svg>
                         </span>
                         <input 
                             type="text" 
-                            id="regName" 
-                            name="name" 
+                            id="regInstitution" 
+                            name="institution" 
                             class="auth-input" 
-                            placeholder="Dr. Maya Sharma, MD" 
+                            placeholder="General Hospital" 
                             required
                         >
                     </div>
                 </div>
-
-                <!-- Email -->
-                <div class="form-group">
-                    <label class="form-label" for="regEmail">Institutional Email Address</label>
-                    <div class="input-wrapper">
-                        <span class="input-icon">
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
-                        </span>
-                        <input 
-                            type="email" 
-                            id="regEmail" 
-                            name="email" 
-                            class="auth-input" 
-                            placeholder="maya.sharma@hospital.org" 
-                            required
-                        >
-                    </div>
-                </div>
-
-                <!-- Specialization Role & Institution Row -->
-                <div class="form-row-2">
-                    <div class="form-group">
-                        <label class="form-label" for="regRole">Clinical Role</label>
-                        <div class="input-wrapper">
-                            <select id="regRole" name="role" class="auth-select" required>
-                                <option value="Neuroradiologist">Neuroradiologist</option>
-                                <option value="Neurosurgeon">Neurosurgeon</option>
-                                <option value="Neuro-Oncologist">Neuro-Oncologist</option>
-                                <option value="Senior Neuro-AI Researcher">Neuro-AI Researcher</option>
-                                <option value="Resident Physician">Resident Physician</option>
-                                <option value="Medical Physicist">Medical Physicist</option>
-                            </select>
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label" for="regInst">Institution / Hospital</label>
-                        <div class="input-wrapper">
-                            <input 
-                                type="text" 
-                                id="regInst" 
-                                name="institution" 
-                                class="auth-input" 
-                                placeholder="Neuro Care Center" 
-                                required
-                            >
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Password Row -->
-                <div class="form-row-2">
-                    <div class="form-group">
-                        <label class="form-label" for="regPassword">Password</label>
-                        <div class="input-wrapper">
-                            <input 
-                                type="password" 
-                                id="regPassword" 
-                                name="password" 
-                                class="auth-input" 
-                                placeholder="Min 6 chars" 
-                                required 
-                                minlength="6"
-                            >
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label class="form-label" for="regConfirmPassword">Confirm Password</label>
-                        <div class="input-wrapper">
-                            <input 
-                                type="password" 
-                                id="regConfirmPassword" 
-                                name="confirm_password" 
-                                class="auth-input" 
-                                placeholder="Re-type password" 
-                                required 
-                                minlength="6"
-                            >
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Regulatory Disclaimer Acknowledgment -->
-                <div class="auth-options" style="margin-top: 4px;">
-                    <label class="remember-label" style="align-items: flex-start;">
-                        <input type="checkbox" name="terms" class="remember-checkbox" required style="margin-top: 2px;">
-                        <span style="font-size: 11.5px; line-height: 1.4;">
-                            I acknowledge that Masthik Anveshan is an investigative research prototype and clinical diagnoses require independent neuroradiologist verification.
-                        </span>
-                    </label>
-                </div>
-
-                <!-- Submit Button -->
-                <button type="submit" class="auth-submit-btn" id="regSubmitBtn">
-                    <span>Complete Registration & Open Workstation</span>
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-                </button>
-            </form>
-
-            <!-- Switch to Login -->
-            <div class="auth-switch-link">
-                <span>Already have clinical credentials?</span>
-                <a href="{{ url_for('login') }}">Sign In to Workstation</a>
             </div>
 
+            <!-- Password Fields -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label class="form-label" for="regPassword">Password</label>
+                    <div class="input-wrapper">
+                        <span class="input-icon">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                        </span>
+                        <input 
+                            type="password" 
+                            id="regPassword" 
+                            name="password" 
+                            class="auth-input" 
+                            placeholder="••••••••" 
+                            required 
+                            autocomplete="new-password"
+                        >
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="regConfirmPassword">Confirm Password</label>
+                    <div class="input-wrapper">
+                        <span class="input-icon">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+                        </span>
+                        <input 
+                            type="password" 
+                            id="regConfirmPassword" 
+                            name="confirm_password" 
+                            class="auth-input" 
+                            placeholder="••••••••" 
+                            required 
+                            autocomplete="new-password"
+                        >
+                    </div>
+                </div>
+            </div>
+
+            <!-- Regulatory Terms Acknowledgment -->
+            <div class="auth-options">
+                <label class="remember-label" style="font-size: 0.78rem;">
+                    <input type="checkbox" name="terms" id="termsCheck" class="remember-checkbox" checked required>
+                    <span>I acknowledge this research workstation is for clinical decision support.</span>
+                </label>
+            </div>
+
+            <!-- Submit Button -->
+            <button type="submit" class="auth-submit-btn" id="signupSubmitBtn">
+                <span>Create Clinician Account</span>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"/></svg>
+            </button>
+        </form>
+
+        <!-- Switch to Sign In -->
+        <div class="auth-switch-footer">
+            Already have an account? 
+            <a href="{{ url_for('login') }}" id="linkToLogin">Sign in here</a>
         </div>
 
     </div>
 
-    <!-- Client-side validation -->
-    <script>
-        document.getElementById('signupForm').addEventListener('submit', function(e) {
-            const p1 = document.getElementById('regPassword').value;
-            const p2 = document.getElementById('regConfirmPassword').value;
-
-            if (p1 !== p2) {
-                e.preventDefault();
-                alert('Passwords do not match. Please verify your password entry.');
-                return false;
-            }
-
-            const btn = document.getElementById('regSubmitBtn');
-            btn.innerHTML = '<span>Creating Clinician Profile...</span>';
-            btn.disabled = true;
-        });
-    </script>
 </body>
 </html>
