@@ -456,10 +456,10 @@ def build_pdf(output_path: str):
             "Multimodal quad-view &bull; All 6 preset inferences &bull; Multipart file upload &bull; Legacy /predict route &bull; Metric plots &bull; Static CSS/JS bundles. (100% Pass)."
         ),
         (
-            "Step 7: Cloud Deployment & Ephemeral Public Tunneling (Point 6)",
-            "run_public.bat, Procfile & render.yaml",
-            "Provides dual deployment pathways: 1-click public HTTPS tunneling via <code>run_public.bat</code> (localhost.run with TLS termination at https://5309cb262dd0be.lhr.life) "
-            "with prominent HIPAA/PHI disclaimers; plus <code>Procfile</code> and <code>render.yaml</code> for containerized cloud deployment on Render/Railway."
+            "Step 7: Cloud Deployment & GitHub Pages Showcase (Point 6)",
+            "docs/index.html, render.yaml, railway.json & fly.toml",
+            "Provides dual deployment pathways: Static front-end and interactive browser simulator hosted on GitHub Pages (https://IGNITETHETEAM-2.github.io/Masthik-Anveshan/), "
+            "plus turnkey containerized cloud configurations (render.yaml, railway.json, fly.toml, and Dockerfile) for full PyTorch Flask execution on Render, Railway, Fly.io, or VPS."
         )
     ]
 
@@ -553,7 +553,7 @@ def build_pdf(output_path: str):
     links_data = [
         [Paragraph("<b>Resource Link</b>", table_header), Paragraph("URL / Path", table_header)],
         [Paragraph("Published GitHub Repository", table_cell_bold), Paragraph("https://github.com/IGNITETHETEAM-2/Masthik-Anveshan", table_cell)],
-        [Paragraph("Live Workstation Demonstration", table_cell_bold), Paragraph("https://5309cb262dd0be.lhr.life &nbsp;<i>(Ephemeral Test Tunnel - No PHI)</i>", table_cell)],
+        [Paragraph("Live Showcase & Simulator", table_cell_bold), Paragraph("https://IGNITETHETEAM-2.github.io/Masthik-Anveshan/ &nbsp;<i>(GitHub Pages)</i>", table_cell)],
         [Paragraph("Local 1-Click Launch Script", table_cell_bold), Paragraph("<code>run_app.bat</code> &nbsp;(Localhost Port 5000: http://localhost:5000)", table_cell)],
         [Paragraph("Automated Verification Suite", table_cell_bold), Paragraph("<code>python verify_all.py</code> &nbsp;(10/10 verification suites passing)", table_cell)],
         [Paragraph("ResNet-50 Checkpoint Origin", table_cell_bold), Paragraph("<code>models/bt_resnet50_model.pt</code> &nbsp;(128 MB, from aksh-ai/neuralBlack)", table_cell)],

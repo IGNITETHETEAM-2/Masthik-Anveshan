@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  masthik-anveshan:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: masthik-anveshan:latest
+    container_name: masthik_anveshan_app
+    restart: unless-stopped
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+      - FLASK_ENV=production
+      - FLASK_SECRET_KEY=masthik-anveshan-vps-secure-2026
+    volumes:
+      - ./users.db:/app/users.db
+      - ./static/images:/app/static/images

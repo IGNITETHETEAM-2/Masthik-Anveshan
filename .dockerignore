@@ -1,0 +1,13 @@
+.git
+.gitignore
+.vscode
+.python
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache
+*.bat
+docs/
+scratch/
+users.db

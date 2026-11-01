@@ -15,8 +15,12 @@ if %errorlevel% neq 0 (
     echo.
     echo =========================================================================
     echo   [SUCCESS] Repository published successfully to GitHub!
-    echo   Public URL configured in About website field:
-    echo   https://5309cb262dd0be.lhr.life
+    echo.
+    echo   Stable Public Showcase URL for Repository "About" Website Field:
+    echo   https://IGNITETHETEAM-2.github.io/Masthik-Anveshan/
+    echo.
+    echo   Dynamic Flask Workstation Cloud Deployment:
+    echo   Pre-configured for Render, Railway, Fly.io, or VPS / Docker.
     echo =========================================================================
 )
 pause

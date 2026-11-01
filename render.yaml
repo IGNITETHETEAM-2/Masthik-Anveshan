@@ -2,8 +2,13 @@ services:
   - type: web
     name: masthik-anveshan-neuro-ai
     env: python
+    plan: free
     buildCommand: pip install -r requirements.txt
-    startCommand: python app.py
+    startCommand: gunicorn --bind 0.0.0.0:$PORT --workers 1 --threads 4 --timeout 120 app:app
     envVars:
       - key: PORT
         value: 5000
+      - key: FLASK_SECRET_KEY
+        generateValue: true
+      - key: FLASK_ENV
+        value: production

@@ -1,18 +1,73 @@
 # Masthik Anveshan: Advanced Brain Tumor Segmentation & Diagnostic Intelligence
 
+[![GitHub Pages](https://img.shields.io/badge/GitHub%20Pages-Live%20Showcase-22c55e.svg?logo=githubpages&logoColor=white)](https://IGNITETHETEAM-2.github.io/Masthik-Anveshan/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.14-EE4C2C.svg?logo=pytorch)](https://pytorch.org/)
 [![Flask](https://img.shields.io/badge/Flask-3.1-black.svg?logo=flask)](https://flask.palletsprojects.com/)
-[![Live Demo](https://img.shields.io/badge/Live%20Demo-Online%20Workstation-00f2fe.svg?logo=googlechrome&logoColor=white)](https://5309cb262dd0be.lhr.life)
+[![Docker](https://img.shields.io/badge/Docker-Ready-2496ED.svg?logo=docker&logoColor=white)](Dockerfile)
 [![BraTS 2020](https://img.shields.io/badge/Dataset-BraTS%202020-00f2fe.svg)](https://www.med.upenn.edu/cbica/brats2020/)
 [![Jun Cheng Figshare](https://img.shields.io/badge/Dataset-Jun%20Cheng%20Figshare-8b5cf6.svg)](https://figshare.com/articles/brain_tumor_dataset/1512427)
 [![Kaggle 4-Class](https://img.shields.io/badge/Dataset-Kaggle%204--Class-10b981.svg)](https://www.kaggle.com/)
 
-> 🌐 **Public Live Working URL**: [https://5309cb262dd0be.lhr.life](https://5309cb262dd0be.lhr.life)
-
-> *(Also configured for 1-click cloud deployment via `Procfile` & `render.yaml`)*
+> 🌐 **Public Live Showcase & Interactive Simulator (GitHub Pages)**: [https://IGNITETHETEAM-2.github.io/Masthik-Anveshan/](https://IGNITETHETEAM-2.github.io/Masthik-Anveshan/)
+>
+> 🚀 **Dynamic Flask AI Workstation**: Turn-key cloud deployment ready for **Render**, **Railway**, **Fly.io**, or any Linux **VPS / Docker** server via included `render.yaml`, `railway.json`, `fly.toml`, `Dockerfile`, and `docker-compose.yml`.
 
 **Masthik Anveshan** (Brain Exploration & Investigation) is a clinical-grade neuro-oncology AI diagnostic workstation. It unifies deep learning brain tumor segmentation (inspired by and extending [Muvva-Radhika/Brain_Tumor_Segmentation](https://github.com/Muvva-Radhika/Brain_Tumor_Segmentation)) with multi-class diagnostic classification across all major benchmark datasets.
 
+---
+
+## 🌟 Dual Deployment Architecture
+
+| Component | Target Platform | Purpose | Link / Config |
+| :--- | :--- | :--- | :--- |
+| **Static Front-End & Docs** | **GitHub Pages** | High-availability showcase, interactive client-side MRI segmentation simulator, BraTS multi-sequence laboratory, architecture visualizer, and technical documentation. | [Live Site](https://IGNITETHETEAM-2.github.io/Masthik-Anveshan/) (`docs/`) |
+| **Dynamic AI Backend** | **Render / Railway / Fly.io / VPS** | Full PyTorch neural engine, SQLite clinician authentication, live multipart MRI scan uploads, real-time segmentation inference, and automated PDF clinical reporting. | [`render.yaml`](render.yaml), [`railway.json`](railway.json), [`fly.toml`](fly.toml), [`Dockerfile`](Dockerfile), [`docker-compose.yml`](docker-compose.yml) |
+| **Local Workstation** | **Windows Desktop** | Offline standalone clinical diagnostic platform on localhost port 5000. | [`run_app.bat`](../run_app.bat) / [`run.bat`](run.bat) |
+
+---
+
+## 🚀 Quick Launch & Cloud Deployment
+
+### 1. View Public Showcase on GitHub Pages
+Visit [https://IGNITETHETEAM-2.github.io/Masthik-Anveshan/](https://IGNITETHETEAM-2.github.io/Masthik-Anveshan/) to explore the live interactive client-side lesion segmentation simulator, compare scan before/after split sliders, and inspect BraTS 4-sequence modalities without needing a backend server.
+
+### 2. Deploy Dynamic Flask App to Render
+1. Go to [Render Dashboard](https://dashboard.render.com).
+2. Click **New +** &rarr; **Blueprint**.
+3. Connect repository `IGNITETHETEAM-2/Masthik-Anveshan`.
+4. Render automatically detects [`render.yaml`](render.yaml) and provisions the service with Gunicorn on HTTPS.
+
+### 3. Deploy to Railway
+Deploy with one command via the Railway CLI, or import the GitHub repo in Railway Dashboard:
+```bash
+railway login
+railway init
+railway up
+```
+Configuration is automatically read from [`railway.json`](railway.json).
+
+### 4. Deploy to Fly.io
+Launch a containerized micro-instance with global edge routing:
+```bash
+fly launch --now --copy-config
+```
+Uses the pre-configured [`fly.toml`](fly.toml) and production [`Dockerfile`](Dockerfile).
+
+### 5. Deploy to Any Linux VPS / Docker Host
+Run a single command on your Ubuntu/Debian/CentOS VPS:
+```bash
+git clone https://github.com/IGNITETHETEAM-2/Masthik-Anveshan.git
+cd Masthik-Anveshan/neuralBlack
+docker compose up -d --build
+```
+The server will start on port `5000` with volume persistence for SQLite clinician accounts.
+
+### 6. Local Windows 1-Click Launch
+Double-click `run_app.bat` in the project root or `run.bat` in this folder:
+```bat
+run_app.bat
+```
+The server will initialize and automatically open **`http://localhost:5000`** in your default web browser.
 
 ---
 
@@ -45,22 +100,6 @@
 5. **Quantitative Morphometrics & Diagnostic Report**:
    - Computes total positive tumor pixels, estimated surface area ($mm^2$ at 1.0mm isotropic resolution), equivalent circular diameter ($mm$), intracranial slice coverage (%), centroid coordinates $(X, Y)$, and anatomical quadrant/lobe localization.
    - Auto-compiles a structured, formal **Clinical Diagnostic Report** with patient UID, radiological findings, thumbnail evidence, staging risk, and 1-click Print/PDF export.
-
----
-
-## 🚀 Quick Launch
-
-### Windows 1-Click Launch:
-Double-click `run_app.bat` in the project root or `run.bat` in the `neuralBlack` folder:
-```bat
-run_app.bat
-```
-The server will start and automatically open **`http://localhost:5000`** in your default web browser.
-
-### Manual Terminal Launch:
-```powershell
-& ".\neuralBlack\.python\python.exe" ".\neuralBlack\app.py"
-```
 
 ---
 
@@ -107,17 +146,25 @@ Masthik Anveshan/
     ├── app.py                    # Unified Flask application & REST API
     ├── models_engine.py          # PyTorch U-Net & 4-Class diagnostic engine
     ├── datasets_data.py          # Combined datasets registry, statistics & presets
-    ├── deploy.py                 # Port 3000 secondary entrypoint
-    ├── run.bat                   # Direct launcher inside neuralBlack
+    ├── auth_db.py                # Clinician authentication & user management
+    ├── generate_pdf_report.py    # Formal clinical PDF report generator
+    ├── render.yaml               # 1-Click Render blueprint deployment config
+    ├── railway.json              # Railway deployment configuration
+    ├── fly.toml                  # Fly.io deployment configuration
+    ├── Dockerfile                # Production container specification (Python 3.10 slim)
+    ├── docker-compose.yml        # 1-Command self-hosted VPS compose file
+    ├── Procfile                  # Production Gunicorn process runner
+    ├── docs/                     # Static front-end & docs hosted on GitHub Pages
+    │   ├── index.html            # Interactive clinical landing page & simulator
+    │   └── images/               # High-res scans, benchmark curves, confusion matrix
+    ├── index.html                # Root GitHub Pages redirection entrypoint
+    ├── .github/workflows/        # Automated GitHub Pages deployment workflow
+    │   └── pages.yml
     ├── models/                   # Deep learning model state weights
     ├── test_images/              # Authentic clinical test MRI scans
     ├── results/                  # Training curves, confusion matrices, evaluation plots
-    ├── static/
-    │   ├── css/main.css          # Glassmorphic dark-mode clinical UI styling
-    │   ├── js/app.js             # Reactive interactive logic, split slider, presets
-    │   └── images/               # Workstation logos and graphics
-    └── template/
-        └── index.html            # Main 5-tab medical workstation single-page application
+    ├── static/                   # Flask dynamic webstation static assets
+    └── template/                 # Flask Jinja2 workstation templates
 ```
 
 ---
